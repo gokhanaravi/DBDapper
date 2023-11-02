@@ -64,4 +64,19 @@ public class DBDapper : IDisposable
 
         }
     }
+
+    public async Task<List<T>> RunSqlProcAsync<T>(string sp, dynamic obj = null)
+    {
+        using IDbConnection db = GetOpenConnection();
+        {
+            if (obj != null)
+            {
+                return (await db.QueryAsync<T>(sp, new RouteValueDictionary(obj).ToDictionary(item => "@" + item.Key, item => item.Value), commandType: CommandType.StoredProcedure)).ToList();
+            }
+            else
+            {
+                return (await db.QueryAsync<T>(sp)).ToList();
+            }
+        }
+    }
 }
