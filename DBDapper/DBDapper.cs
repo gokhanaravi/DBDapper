@@ -1,22 +1,21 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
 public class DBDapper : IDisposable
 {
-    private string _connectionString;
+    private readonly string _connectionString;
     private IDbConnection _connection;
 
-    public DBDapper(string? ConnectionStringName = "SqlConnection")
+    public DBDapper(IConfiguration configuration, string connectionStringName = "SqlConnection")
     {
-        _connectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json", false, true).Build().GetConnectionString(ConnectionStringName);
+        _connectionString = configuration.GetConnectionString(connectionStringName);
     }
+
     public void Dispose()
     {
-        if (_connection != null && _connection.State != ConnectionState.Closed)
-            _connection.Close();
+        _connection?.Close();
     }
 
     private IDbConnection Connection
@@ -36,47 +35,19 @@ public class DBDapper : IDisposable
         }
     }
 
-    public string ConnectionString
-    {
-        get { return _connectionString; }
-    }
+    public string ConnectionString => _connectionString;
 
-    public SqlConnection GetOpenConnection()
-    {
-        var connection = new SqlConnection(_connectionString);
-        connection.Open();
-        return connection;
-    }
+    public SqlConnection GetOpenConnection() => new SqlConnection(_connectionString);
 
-
-    public List<T> RunSqlProc<T>(string sp, dynamic obj = null)
+    public List<T> RunSqlProc<T>(string sp, object parameters = null)
     {
         using IDbConnection db = GetOpenConnection();
-        {
-            if (obj != null)
-            {
-                return db.Query<T>(sp, new RouteValueDictionary(obj).ToDictionary(item => "@" + item.Key, item => item.Value), commandType: CommandType.StoredProcedure).ToList();
-            }
-            else
-            {
-                return db.Query<T>(sp).ToList();
-            }
-
-        }
+        return db.Query<T>(sp, parameters, commandType: CommandType.StoredProcedure).ToList();
     }
 
-    public async Task<List<T>> RunSqlProcAsync<T>(string sp, dynamic obj = null)
+    public async Task<List<T>> RunSqlProcAsync<T>(string sp, object parameters = null)
     {
         using IDbConnection db = GetOpenConnection();
-        {
-            if (obj != null)
-            {
-                return (await db.QueryAsync<T>(sp, new RouteValueDictionary(obj).ToDictionary(item => "@" + item.Key, item => item.Value), commandType: CommandType.StoredProcedure)).ToList();
-            }
-            else
-            {
-                return (await db.QueryAsync<T>(sp)).ToList();
-            }
-        }
+        return (await db.QueryAsync<T>(sp, parameters, commandType: CommandType.StoredProcedure)).ToList();
     }
 }
