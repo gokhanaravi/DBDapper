@@ -8,14 +8,19 @@ public class DBDapper : IDisposable
     private readonly string _connectionString;
     private IDbConnection _connection;
 
-    public DBDapper(IConfiguration configuration, string connectionStringName = "SqlConnection")
+    public DBDapper(string connectionStringName = "SqlConnection")
     {
+        IConfiguration configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", false, true)
+            .Build();
+
         _connectionString = configuration.GetConnectionString(connectionStringName);
     }
 
     public void Dispose()
     {
         _connection?.Close();
+        _connection?.Dispose();
     }
 
     private IDbConnection Connection
@@ -37,8 +42,6 @@ public class DBDapper : IDisposable
 
     public string ConnectionString => _connectionString;
 
-    public SqlConnection GetOpenConnection() => new SqlConnection(_connectionString);
-
     public List<T> RunSqlProc<T>(string sp, object parameters = null)
     {
         using IDbConnection db = GetOpenConnection();
@@ -49,5 +52,12 @@ public class DBDapper : IDisposable
     {
         using IDbConnection db = GetOpenConnection();
         return (await db.QueryAsync<T>(sp, parameters, commandType: CommandType.StoredProcedure)).ToList();
+    }
+
+    private SqlConnection GetOpenConnection()
+    {
+        var connection = new SqlConnection(_connectionString);
+        connection.Open();
+        return connection;
     }
 }
