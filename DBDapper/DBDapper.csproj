@@ -12,7 +12,9 @@
     <Description>It provides a simple use for Dapper.</Description>
     <Version>3.0.1</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageIcon>372c1ed3-4f79-48fb-8f64-ac0c5064115f.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackAsTool>False</PackAsTool>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +23,17 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
