@@ -1,4 +1,4 @@
-﻿# <img src="icon.png" width="30" align="left"> DBDapper
+﻿# <img src="icon.png" width="100" align="left"> DBDapper
 [![NuGet](http://img.shields.io/nuget/vpre/DBDapper.svg?label=NuGet)](https://www.nuget.org/packages/DBDapper/)
 ## Overview
 
