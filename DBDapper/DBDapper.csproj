@@ -10,12 +10,13 @@
     <Copyright>@Gökhan Aravi</Copyright>
     <Company>Gökhan Aravi</Company>
     <Description>It provides a simple use for Dapper.</Description>
-    <Version>3.0.2</Version>
+    <Version>3.0.3</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>icon.png</PackageIcon>
     <PackAsTool>False</PackAsTool>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/gokhanaravi/DBDapper</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
