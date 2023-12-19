@@ -10,8 +10,9 @@
     <Copyright>@Gökhan Aravi</Copyright>
     <Company>Gökhan Aravi</Company>
     <Description>It provides a simple use for Dapper.</Description>
-    <Version>2.2.0</Version>
+    <Version>3.0.1</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageIcon>372c1ed3-4f79-48fb-8f64-ac0c5064115f.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
