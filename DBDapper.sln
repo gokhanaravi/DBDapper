@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBDapper", "DBDapper\DBDapp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEAABC90-6436-4B29-BEDC-43065F35D35E}"
 	ProjectSection(SolutionItems) = preProject
+		icon.png = icon.png
 		LICENSE.txt = LICENSE.txt
 		readme.md = readme.md
 	EndProjectSection
